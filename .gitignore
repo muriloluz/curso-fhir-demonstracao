@@ -1,0 +1,9 @@
+# baixado pelo baixar-validador.sh
+recursos/validador/*.jar
+
+# gerado pelo SUSHI
+fsh-generated/
+
+# temporários
+*.log
+.DS_Store

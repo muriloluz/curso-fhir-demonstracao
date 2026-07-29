@@ -1,0 +1,5 @@
+canonical: http://exemplo-curso-fhir.local/rac
+fhirVersion: 4.0.1
+FSHOnly: true
+dependencies:
+  br.ufg.cgis.rnds-lite: 0.5.0
