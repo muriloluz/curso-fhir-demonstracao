@@ -53,6 +53,7 @@ java -jar recursos/validador/validator_cli.jar \
 | recursos/rnds-lite-0.5.0.tgz | package do IG (usado pelo SUSHI e pelo validador) |
 | recursos/validador/validator_cli.jar | validador oficial HL7 |
 | [etapas/](etapas/README.md) | o RAC ampliado em JSON, um recurso por arquivo (etapas 01–19), com instruções e resultado esperado de validação por arquivo |
+| [visualizadores/](visualizadores/) | páginas HTML autocontidas para navegar pelos bundles no navegador: [visualizador-rac.html](visualizadores/visualizador-rac.html) (completo, 13 entries) e [visualizador-rac-ampliado.html](visualizadores/visualizador-rac-ampliado.html) (ampliado, 19 entries) — JSON embutido, notas didáticas e referências navegáveis |
 
 ## Pontos para narrar na demonstração
 
