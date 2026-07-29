@@ -1,0 +1,35 @@
+{
+  "resourceType": "Condition",
+  "id": "RacProblemaDiagnostico",
+  "meta": {
+    "profile": [
+      "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProblemaDiagnostico"
+    ]
+  },
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Diagnóstico ativo: J06.9 — Infecção aguda das vias aéreas superiores, não especificada (CID-10). Paciente CPF 12345678909.</p></div>"
+  },
+  "clinicalStatus": {
+    "coding": [
+      {
+        "code": "active",
+        "system": "http://terminology.hl7.org/CodeSystem/condition-clinical"
+      }
+    ]
+  },
+  "code": {
+    "coding": [
+      {
+        "code": "J069",
+        "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCID10"
+      }
+    ]
+  },
+  "subject": {
+    "identifier": {
+      "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+      "value": "12345678909"
+    }
+  }
+}

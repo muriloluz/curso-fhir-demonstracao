@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAC ampliado — Registro de Atendimento Clínico (Bundle document)</title>
+<style>
+  :root {
+    --papel: #F7F6F2; --branco: #FFFFFF; --tinta: #22211E; --suave: #6B6960;
+    --hairline: #E3E1D8; --borda: #D8D5CC; --acento: #B33A26; --cod-bg: #F1EFE9;
+    --c-comp: #A63B2A; --c-enc: #6E5E9E; --c-cond: #4E7A54; --c-proc: #3E6E8E;
+    --c-medreq: #9A6B2F; --c-med: #8A887F;
+    --sans: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --mono: ui-monospace, "Cascadia Code", Consolas, "Courier New", monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { font-family: var(--sans); color: var(--tinta); background: var(--papel); font-size: 15px; display: flex; flex-direction: column; overflow: hidden; }
+
+  /* ---------- cabeçalho editorial ---------- */
+  header { flex: none; background: var(--branco); border-bottom: 1px solid var(--borda); padding: 26px 36px 0; }
+  .sobretitulo { font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--suave); }
+  .titulo-linha { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin: 6px 0 4px; }
+  header h1 { font-family: var(--serif); font-weight: 400; font-size: 1.7rem; letter-spacing: -.01em; }
+  .carimbo { border: 1px solid var(--tinta); padding: 4px 12px; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+  header .lede { font-size: .82rem; color: var(--suave); max-width: 74ch; line-height: 1.5; padding-bottom: 14px; }
+  .meta-doc { display: flex; flex-wrap: wrap; border-top: 1px solid var(--hairline); font-size: .74rem; }
+  .meta-doc > div { padding: 8px 22px 10px 0; margin-right: 22px; }
+  .meta-doc .k { display: block; letter-spacing: .12em; text-transform: uppercase; color: var(--suave); font-size: .62rem; margin-bottom: 2px; }
+  .meta-doc .v { font-family: var(--mono); font-size: .74rem; }
+  .meta-doc .regras span { border-bottom: 1px dotted var(--suave); cursor: help; margin-right: 10px; }
+
+  main { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(390px, 43%) 1fr; }
+
+  /* ---------- índice (esquerda) ---------- */
+  #malote { overflow-y: auto; padding: 22px 28px 40px 36px; border-right: 1px solid var(--borda); }
+  #malote h2 { font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--suave); font-weight: 600; padding-bottom: 8px; border-bottom: 1px solid var(--tinta); margin-bottom: 4px; }
+  .card { background: var(--branco); border: 1px solid var(--hairline); border-left: 3px solid var(--suave); padding: 10px 14px; margin-top: 10px; cursor: pointer; transition: border-color .15s, background .15s; }
+  .card:hover { border-color: var(--borda); border-left-width: 3px; background: #FDFCFA; }
+  .card.ativo { border-left-color: var(--acento) !important; background: #FDFCFA; }
+  .card.flash { animation: flash 1s ease-out; }
+  @keyframes flash { 0%,45% { background: #F6E8E4; } 100% { background: #FDFCFA; } }
+  .card .tipo { display: flex; align-items: baseline; gap: 10px; }
+  .card .num { font-family: var(--mono); font-size: .78rem; color: var(--acento); min-width: 1.2em; }
+  .card .nome { font-weight: 600; font-size: .95rem; }
+  .card .perfil { font-family: var(--mono); font-size: .68rem; color: var(--suave); margin: 3px 0 0 calc(1.2em + 10px); }
+  .card .resumo { font-size: .78rem; color: var(--suave); margin: 4px 0 0 calc(1.2em + 10px); line-height: 1.45; }
+  .card .fullurl { font-family: var(--mono); font-size: .62rem; color: #A5A399; margin: 5px 0 0 calc(1.2em + 10px); word-break: break-all; }
+  .c-Composition { border-left-color: var(--c-comp); }
+  .c-Encounter { border-left-color: var(--c-enc); }
+  .c-Condition { border-left-color: var(--c-cond); }
+  .c-Procedure { border-left-color: var(--c-proc); }
+  .c-MedicationRequest { border-left-color: var(--c-medreq); }
+  .c-Medication { border-left-color: var(--c-med); }
+  .c-Observation { border-left-color: #2E7D6E; }
+  .c-AllergyIntolerance { border-left-color: #B0762B; }
+  .c-CarePlan { border-left-color: #5E7A2E; }
+  .c-Location { border-left-color: #55606B; }
+  .nivel-1 { margin-left: 26px; } .nivel-2 { margin-left: 52px; }
+  .conector { font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--suave); margin: 12px 0 -4px 30px; }
+  .conector.n2 { margin-left: 56px; }
+  .conector b { color: var(--tinta); font-weight: 600; }
+  .nota-indice { border: 1px dashed var(--borda); background: transparent; padding: 12px 14px; margin-top: 18px; font-size: .78rem; color: var(--suave); line-height: 1.5; }
+  .nota-indice .rotulo { display: block; font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 4px; color: var(--tinta); }
+
+  /* ---------- detalhe (direita) ---------- */
+  #detalhe { overflow-y: auto; padding: 26px 40px 60px; background: var(--branco); }
+  #detalhe .vazio { color: var(--suave); margin-top: 18vh; text-align: center; font-family: var(--serif); font-style: italic; }
+  #detalhe h2 { font-family: var(--serif); font-weight: 400; font-size: 1.45rem; }
+  #detalhe h2 .num-det { color: var(--acento); font-family: var(--mono); font-size: 1rem; margin-right: 8px; }
+  #detalhe .perfil-link { font-family: var(--mono); font-size: .7rem; color: var(--suave); margin-top: 4px; word-break: break-all; }
+  .nota { border-left: 2px solid var(--acento); padding: 8px 0 8px 16px; margin: 18px 0 4px; font-size: .84rem; line-height: 1.55; color: #454340; }
+  .nota .nota-rotulo { display: block; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--acento); margin-bottom: 3px; font-weight: 600; }
+  .abas { display: flex; gap: 26px; margin-top: 20px; border-bottom: 1px solid var(--borda); }
+  .aba { background: none; border: none; cursor: pointer; font-family: var(--sans); font-size: .72rem; letter-spacing: .13em; text-transform: uppercase; color: var(--suave); padding: 6px 0 10px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .aba.ativa { color: var(--tinta); border-bottom-color: var(--acento); font-weight: 600; }
+  .painel-aba { display: none; padding: 22px 0; }
+  .painel-aba.ativa { display: block; }
+
+  .campo { display: grid; grid-template-columns: 200px 1fr; gap: 14px; padding: 9px 2px; border-bottom: 1px solid var(--hairline); font-size: .86rem; align-items: baseline; }
+  .campo .k { font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--suave); font-family: var(--sans); }
+  .cod { font-family: var(--mono); font-size: .78rem; background: var(--cod-bg); padding: 1px 7px; border: 1px solid var(--hairline); }
+  .decod { color: var(--suave); font-size: .8rem; }
+  .decod.sistema { font-size: .68rem; font-family: var(--mono); }
+  a.ref { font-family: var(--mono); font-size: .78rem; color: var(--acento); text-decoration: none; border-bottom: 1px solid currentColor; cursor: pointer; white-space: nowrap; }
+  a.ref:hover { background: #F6E8E4; }
+  .ref-log { font-family: var(--mono); font-size: .78rem; color: var(--suave); border-bottom: 1px dotted var(--suave); cursor: help; }
+  .ref-log b { color: var(--tinta); font-weight: 600; }
+
+  .narrativa-box { border: 1px solid var(--borda); background: #FCFBF8; padding: 20px 26px; }
+  .narrativa-box .rotulo-nar { display: block; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--suave); margin-bottom: 12px; font-family: var(--sans); }
+  .narrativa-box div[xmlns], .narrativa-box p { font-family: var(--serif); font-size: 1rem; line-height: 1.7; }
+
+  pre.json { background: #F4F2EC; border: 1px solid var(--hairline); padding: 18px 20px; font-size: .74rem; line-height: 1.6; overflow-x: auto; font-family: var(--mono); color: #3E3C36; }
+  pre.json .jk { color: #5A4632; } pre.json .js { color: #7A3B2E; } pre.json .jn { color: #2E5E7A; }
+  pre.json .jref { color: var(--acento); text-decoration: underline; cursor: pointer; }
+
+  .rel-grupo { margin-bottom: 26px; }
+  .rel-grupo h4 { font-size: .66rem; letter-spacing: .15em; text-transform: uppercase; color: var(--suave); font-weight: 600; border-bottom: 1px solid var(--tinta); padding-bottom: 5px; margin-bottom: 2px; }
+  .rel-linha { display: grid; grid-template-columns: 260px 1fr; gap: 14px; padding: 8px 2px; font-size: .82rem; border-bottom: 1px solid var(--hairline); align-items: baseline; }
+  .rel-linha .caminho { font-family: var(--mono); font-size: .72rem; color: var(--suave); word-break: break-all; }
+  .rel-vazio { color: var(--suave); font-size: .8rem; font-style: italic; padding: 8px 2px; font-family: var(--serif); }
+
+  footer { position: fixed; bottom: 0; right: 0; background: var(--papel); font-size: .62rem; color: var(--suave); padding: 4px 12px; border: 1px solid var(--hairline); border-right: none; border-bottom: none; }
+</style>
+</head>
+<body>
+<header>
+  <div class="sobretitulo">Interoperabilidade em Saúde com HL7&#174; FHIR&#174; &mdash; material didático &mdash; curso independente (não representa RNDS/MS nem HL7)</div>
+  <div class="titulo-linha">
+    <h1>Registro de Atendimento Clínico &mdash; exemplo ampliado comentado</h1>
+    <span class="carimbo">Bundle &middot; document</span>
+  </div>
+  <p class="lede">A versão <b>ampliada</b> do RAC (input/fsh/rac-ampliado.fsh, via SUSHI): 2 diagnósticos, 2 procedimentos, 2 medicamentos na mesma prescrição, 3 observações e 2 alergias &mdash; validada sem erros contra o package br.ufg.cgis.rnds-lite 0.5.0. Selecione um recurso no índice; as referências <span style="font-family:var(--mono)">urn:uuid</span> resolvem por correspondência de <span style="font-family:var(--mono)">fullUrl</span> e são navegáveis.</p>
+  <div class="meta-doc" id="lacre"></div>
+</header>
+<main>
+  <section id="malote"></section>
+  <section id="detalhe"><div class="vazio">Selecione um recurso do índice para inspecioná-lo.</div></section>
+</main>
+<footer>gerado de rac-bundle-completo.json &mdash; regenerar se as instâncias mudarem</footer>
+
+<script id="bundle-json" type="application/json">
+{
+  "resourceType": "Bundle",
+  "id": "rac-bundle-ampliado",
+  "identifier": {
+    "system": "http://www.saude.gov.br/fhir/r4/NamingSystem/BRRNDS-99999",
+    "value": "2337545-8f2b47ac-3d5e-4c91-b76a-de0f19283a4b"
+  },
+  "type": "document",
+  "timestamp": "2026-07-22T09:45:00-03:00",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:d4e5f6a7-8b9c-4d0e-b1f2-3a4b5c6d7e8f",
+      "resource": {
+        "resourceType": "Composition",
+        "id": "RacComposicaoAmpliada",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegistroAtendimentoClinico"
+          ]
+        },
+        "type": {
+          "coding": [
+            {
+              "code": "RAC",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDocumento"
+            }
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Registro de Atendimento Clínico</b> — atenção básica. Paciente CPF 12345678909, atendida em 22/07/2026 na UBS CNES 2337545. Diagnósticos: J06.9 (atendimento) e J45.9 (comorbidade). Procedimentos: 0301010030 (consulta APS) e 0301100039 (aferição de PA). Prescrição: salbutamol xarope (bucal) e paracetamol pó para solução (oral). Observações: peso 72,5 kg; altura 175 cm; circunferência abdominal 89 cm. Alergias: dipirona (medicamento, alta criticidade — urticária) e amendoim (alimento, baixa criticidade — angioedema). Plano de cuidados: hidratação, repouso e retorno em 7 dias.</p></div>"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "01",
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRModalidadeAssistencial"
+              }
+            ]
+          }
+        ],
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "date": "2026-07-22T09:45:00-03:00",
+        "author": [
+          {
+            "identifier": {
+              "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+              "value": "2337545"
+            }
+          }
+        ],
+        "title": "Registro de Atendimento Clínico",
+        "section": [
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:e5f6a7b8-9c0d-4e1f-82a3-4b5c6d7e8f90"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:5b6f3a10-2c1e-4a7b-9a44-1f2ab3c4d5e6"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:f6a7b8c9-0d1e-4f2a-93b4-5c6d7e8f9012"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:7c8d9e20-3f4a-4b5c-8d6e-2a3b4c5d6e7f"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:a7b8c9d0-1e2f-4a3b-84c5-6d7e8f901234"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:d0e1f2a3-4b5c-4d6e-97f8-901234567890"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:8b9c0da0-1e2f-4a3b-8c4d-e5f60718293a"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:9c0d1eb0-2f3a-4b4c-9d5e-f60718293a4b"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:b8c9d0e1-2f3a-4b4c-95d6-7e8f90123456"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:5f6a7b80-9c0d-4e1f-a2b3-c4d5e6f708a9"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:c9d0e1f2-3a4b-4c5d-86e7-8f9012345678"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:a1b2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:e5f6a7b8-9c0d-4e1f-82a3-4b5c6d7e8f90",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "RacContatoAssistencialAmpliado",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRContatoAssistencial-1.0"
+          ]
+        },
+        "participant": [
+          {
+            "extension": [
+              {
+                "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROcupacao-1.0",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "code": "225103",
+                      "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO"
+                    }
+                  ]
+                }
+              },
+              {
+                "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIdentificacaoEquipe-1.0",
+                "valueInteger": 1234567
+              }
+            ],
+            "type": [
+              {
+                "coding": [
+                  {
+                    "code": "atendimento",
+                    "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRResponsabilidadeParticipante"
+                  }
+                ]
+              }
+            ],
+            "individual": {
+              "identifier": {
+                "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+                "value": "898001160660034-2337545"
+              }
+            }
+          }
+        ],
+        "diagnosis": [
+          {
+            "condition": {
+              "extension": [
+                {
+                  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRFinanciamento-1.0",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "code": "01",
+                        "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRFinanciamento"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "reference": "urn:uuid:7c8d9e20-3f4a-4b5c-8d6e-2a3b4c5d6e7f"
+            }
+          },
+          {
+            "condition": {
+              "extension": [
+                {
+                  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRFinanciamento-1.0",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "code": "01",
+                        "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRFinanciamento"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "reference": "urn:uuid:a7b8c9d0-1e2f-4a3b-84c5-6d7e8f901234"
+            }
+          },
+          {
+            "condition": {
+              "reference": "urn:uuid:5b6f3a10-2c1e-4a7b-9a44-1f2ab3c4d5e6"
+            },
+            "use": {
+              "coding": [
+                {
+                  "code": "AD",
+                  "system": "http://terminology.hl7.org/CodeSystem/diagnosis-role"
+                }
+              ]
+            }
+          },
+          {
+            "condition": {
+              "reference": "urn:uuid:f6a7b8c9-0d1e-4f2a-93b4-5c6d7e8f9012"
+            },
+            "use": {
+              "coding": [
+                {
+                  "code": "CM",
+                  "system": "http://terminology.hl7.org/CodeSystem/diagnosis-role"
+                }
+              ]
+            }
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Contato assistencial finalizado, atenção básica, demanda espontânea, 22/07/2026 09:00–09:40. Paciente CPF 12345678909, profissional lotado (CNS 898001160660034, CNES 2337545), UBS CNES 2337545. Diagnósticos: J06.9 (atendimento) e J45.9 (comorbidade). Procedimentos: consulta na APS e aferição de pressão arterial. Motivo: dor de garganta e coriza há 3 dias. Local: Consultório 3. Desfecho: alta clínica.</p></div>"
+        },
+        "status": "finished",
+        "class": {
+          "code": "01",
+          "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRModalidadeAssistencial"
+        },
+        "priority": {
+          "coding": [
+            {
+              "code": "05",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCaraterAtendimento"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "period": {
+          "start": "2026-07-22T09:00:00-03:00",
+          "end": "2026-07-22T09:40:00-03:00"
+        },
+        "hospitalization": {
+          "admitSource": {
+            "coding": [
+              {
+                "code": "09",
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRProcedencia"
+              }
+            ]
+          },
+          "dischargeDisposition": {
+            "coding": [
+              {
+                "code": "01",
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMotivoDesfecho"
+              }
+            ]
+          }
+        },
+        "serviceProvider": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+            "value": "2337545"
+          }
+        },
+        "reasonReference": [
+          {
+            "reference": "urn:uuid:b2c3d4e5-6f7a-4b8c-9d0e-1f2a3b4c5d6e"
+          }
+        ],
+        "location": [
+          {
+            "location": {
+              "reference": "urn:uuid:c3d4e5f6-7a8b-4c9d-a0e1-2f3a4b5c6d7e"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5b6f3a10-2c1e-4a7b-9a44-1f2ab3c4d5e6",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "RacProblemaDiagnostico",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProblemaDiagnostico"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Diagnóstico ativo: J06.9 — Infecção aguda das vias aéreas superiores, não especificada (CID-10). Paciente CPF 12345678909.</p></div>"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "code": "active",
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "code": "J069",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCID10"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:f6a7b8c9-0d1e-4f2a-93b4-5c6d7e8f9012",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "RacDiagnosticoAsma",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProblemaDiagnostico"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Comorbidade ativa: J45.9 — Asma não especificada (CID-10). Paciente CPF 12345678909.</p></div>"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "code": "active",
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "code": "J459",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCID10"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:7c8d9e20-3f4a-4b5c-8d6e-2a3b4c5d6e7f",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "RacProcedimentoRealizado",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProcedimentoRealizado-1.0"
+          ]
+        },
+        "extension": [
+          {
+            "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRQuantidade-1.0",
+            "valuePositiveInt": 1
+          }
+        ],
+        "performer": [
+          {
+            "extension": [
+              {
+                "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIdentificacaoEquipe-1.0",
+                "valueInteger": 1234567
+              }
+            ],
+            "function": {
+              "coding": [
+                {
+                  "code": "225103",
+                  "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO"
+                }
+              ]
+            },
+            "actor": {
+              "identifier": {
+                "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+                "value": "898001160660034-2337545"
+              }
+            },
+            "onBehalfOf": {
+              "identifier": {
+                "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+                "value": "2337545"
+              }
+            }
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Procedimento concluído em 22/07/2026: 0301010030 — consulta de profissional de nível superior na atenção primária (Tabela SUS), quantidade 1. Paciente CPF 12345678909.</p></div>"
+        },
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "code": "0301010030",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTabelaSUS"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "performedDateTime": "2026-07-22T09:30:00-03:00"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:a7b8c9d0-1e2f-4a3b-84c5-6d7e8f901234",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "RacProcedimentoAfericaoPA",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProcedimentoRealizado-1.0"
+          ]
+        },
+        "extension": [
+          {
+            "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRQuantidade-1.0",
+            "valuePositiveInt": 1
+          }
+        ],
+        "performer": [
+          {
+            "extension": [
+              {
+                "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIdentificacaoEquipe-1.0",
+                "valueInteger": 1234567
+              }
+            ],
+            "function": {
+              "coding": [
+                {
+                  "code": "225103",
+                  "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO"
+                }
+              ]
+            },
+            "actor": {
+              "identifier": {
+                "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+                "value": "898001160660034-2337545"
+              }
+            },
+            "onBehalfOf": {
+              "identifier": {
+                "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+                "value": "2337545"
+              }
+            }
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Procedimento concluído em 22/07/2026: 0301100039 — aferição de pressão arterial (Tabela SUS), quantidade 1. Paciente CPF 12345678909.</p></div>"
+        },
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "code": "0301100039",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTabelaSUS"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "performedDateTime": "2026-07-22T09:05:00-03:00"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:d0e1f2a3-4b5c-4d6e-97f8-901234567890",
+      "resource": {
+        "resourceType": "Composition",
+        "id": "RacPrescricaoComposicaoAmpliada",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegistroPrescricaoMedicamento"
+          ]
+        },
+        "type": {
+          "coding": [
+            {
+              "code": "RPM",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDocumento"
+            }
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Registro de Prescrição de Medicamento</b> — paciente CPF 12345678909, prescrito em 22/07/2026 pela UBS CNES 2337545: (1) salbutamol sulfato 0,4 mg/ml xarope, via bucal; (2) paracetamol 500 mg pó para solução 10 ml, via oral.</p></div>"
+        },
+        "status": "final",
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "date": "2026-07-22T09:40:00-03:00",
+        "author": [
+          {
+            "identifier": {
+              "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+              "value": "2337545"
+            }
+          }
+        ],
+        "title": "Registro de Prescrição de Medicamento",
+        "section": [
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:3f4a5b60-7c8d-4e9f-a0b1-6d7e8f90a1b3"
+              },
+              {
+                "reference": "urn:uuid:e1f2a3b4-5c6d-4e7f-88a9-012345678901"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:3f4a5b60-7c8d-4e9f-a0b1-6d7e8f90a1b3",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "RacPrescricaoMedicamento",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPrescricaoMedicamento"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Prescrição ativa: salbutamol sulfato 0,4 mg/ml xarope, via bucal, 10 ml por administração, 3 administrações, validade 22/07/2026–29/07/2026, dispensar 1 frasco. Paciente CPF 12345678909.</p></div>"
+        },
+        "status": "active",
+        "intent": "order",
+        "medicationReference": {
+          "reference": "urn:uuid:4a5b6c70-8d9e-4fa0-b1c2-7e8f90a1b2c4"
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "authoredOn": "2026-07-22T09:40:00-03:00",
+        "requester": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+            "value": "898001160660034-2337545"
+          }
+        },
+        "recorder": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+            "value": "898001160660034-2337545"
+          }
+        },
+        "dosageInstruction": [
+          {
+            "timing": {
+              "repeat": {
+                "count": 3,
+                "countMax": 3
+              }
+            },
+            "route": {
+              "coding": [
+                {
+                  "code": "10863",
+                  "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRViaAdministracao"
+                }
+              ]
+            },
+            "doseAndRate": [
+              {
+                "type": {
+                  "coding": [
+                    {
+                      "code": "48",
+                      "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida"
+                    }
+                  ]
+                },
+                "doseQuantity": {
+                  "value": 10
+                }
+              }
+            ],
+            "maxDosePerAdministration": {
+              "value": 10
+            }
+          }
+        ],
+        "dispenseRequest": {
+          "validityPeriod": {
+            "start": "2026-07-22T00:00:00-03:00",
+            "end": "2026-07-29T23:59:59-03:00"
+          },
+          "quantity": {
+            "value": 1
+          }
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:4a5b6c70-8d9e-4fa0-b1c2-7e8f90a1b2c4",
+      "resource": {
+        "resourceType": "Medication",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedicamento"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "code": "BR0292331-2",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedicamento"
+            }
+          ]
+        },
+        "form": {
+          "coding": [
+            {
+              "code": "31",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:e1f2a3b4-5c6d-4e7f-88a9-012345678901",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "RacPrescricaoParacetamol",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPrescricaoMedicamento"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Prescrição ativa: paracetamol 500 mg pó para solução 10 ml, via oral, se dor ou febre, até 4 administrações/dia por 3 dias, validade 22/07/2026–25/07/2026, dispensar 12 envelopes. Paciente CPF 12345678909.</p></div>"
+        },
+        "status": "active",
+        "intent": "order",
+        "medicationReference": {
+          "reference": "urn:uuid:f2a3b4c5-6d7e-4f80-99ba-123456789012"
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "authoredOn": "2026-07-22T09:40:00-03:00",
+        "requester": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+            "value": "898001160660034-2337545"
+          }
+        },
+        "recorder": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+            "value": "898001160660034-2337545"
+          }
+        },
+        "dosageInstruction": [
+          {
+            "timing": {
+              "repeat": {
+                "count": 12,
+                "countMax": 12
+              }
+            },
+            "route": {
+              "coding": [
+                {
+                  "code": "10907",
+                  "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRViaAdministracao"
+                }
+              ]
+            },
+            "doseAndRate": [
+              {
+                "type": {
+                  "coding": [
+                    {
+                      "code": "48",
+                      "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida"
+                    }
+                  ]
+                },
+                "doseQuantity": {
+                  "value": 10
+                }
+              }
+            ],
+            "maxDosePerAdministration": {
+              "value": 10
+            }
+          }
+        ],
+        "dispenseRequest": {
+          "validityPeriod": {
+            "start": "2026-07-22T00:00:00-03:00",
+            "end": "2026-07-25T23:59:59-03:00"
+          },
+          "quantity": {
+            "value": 12
+          }
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:f2a3b4c5-6d7e-4f80-99ba-123456789012",
+      "resource": {
+        "resourceType": "Medication",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedicamento"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "code": "BR0267778-1",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedicamento"
+            }
+          ]
+        },
+        "form": {
+          "coding": [
+            {
+              "code": "27",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:8b9c0da0-1e2f-4a3b-8c4d-e5f60718293a",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "RacObservacaoPeso",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedidaObservada"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Peso</b>: 72,5 kg, aferido no atendimento.</p></div>"
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "code": "P",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoObservacao"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "effectiveTiming": {
+          "event": [
+            "2026-07-22T09:45:00-03:00"
+          ]
+        },
+        "valueQuantity": {
+          "value": 72.5,
+          "unit": "kg",
+          "system": "http://unitsofmeasure.org",
+          "code": "kg"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:9c0d1eb0-2f3a-4b4c-9d5e-f60718293a4b",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "RacObservacaoAltura",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedidaObservada"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Altura</b>: 175 cm, aferida no atendimento.</p></div>"
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "code": "A",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoObservacao"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "effectiveTiming": {
+          "event": [
+            "2026-07-22T09:45:00-03:00"
+          ]
+        },
+        "valueQuantity": {
+          "value": 175,
+          "unit": "cm",
+          "system": "http://unitsofmeasure.org",
+          "code": "cm"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:b8c9d0e1-2f3a-4b4c-95d6-7e8f90123456",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "RacObservacaoCircAbdominal",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedidaObservada"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Circunferência abdominal</b>: 89 cm, aferida no atendimento.</p></div>"
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "code": "CA",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoObservacao"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "effectiveTiming": {
+          "event": [
+            "2026-07-22T09:45:00-03:00"
+          ]
+        },
+        "valueQuantity": {
+          "value": 89,
+          "unit": "cm",
+          "system": "http://unitsofmeasure.org",
+          "code": "cm"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5f6a7b80-9c0d-4e1f-a2b3-c4d5e6f708a9",
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "RacAlergiaDipirona",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAlergiaReacaoAdversa-1.0"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Alergia a medicamento</b>: dipirona sódica 500 mg comprimido — confirmada, criticidade alta. Reação prévia: urticária. Início: 15/03/2020.</p></div>"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "code": "active",
+              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "code": "confirmed",
+              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification"
+            }
+          ]
+        },
+        "type": "allergy",
+        "category": [
+          "medication"
+        ],
+        "criticality": "high",
+        "code": {
+          "coding": [
+            {
+              "code": "BR0267203U0042",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedicamento"
+            }
+          ]
+        },
+        "patient": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "onsetDateTime": "2020-03-15",
+        "reaction": [
+          {
+            "manifestation": [
+              {
+                "coding": [
+                  {
+                    "code": "10046735",
+                    "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedDRA"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:c9d0e1f2-3a4b-4c5d-86e7-8f9012345678",
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "RacAlergiaAmendoim",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAlergiaReacaoAdversa-1.0"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Alergia alimentar</b>: amendoim (CBARA) — confirmada, baixa criticidade. Reação prévia: angioedema. Início: 10/06/2015.</p></div>"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "code": "active",
+              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "code": "confirmed",
+              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification"
+            }
+          ]
+        },
+        "type": "allergy",
+        "category": [
+          "food"
+        ],
+        "criticality": "low",
+        "code": {
+          "coding": [
+            {
+              "code": "amendoim",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRAlergenosCBARA"
+            }
+          ]
+        },
+        "patient": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "onsetDateTime": "2015-06-10",
+        "reaction": [
+          {
+            "manifestation": [
+              {
+                "coding": [
+                  {
+                    "code": "10002424",
+                    "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedDRA"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:a1b2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+      "resource": {
+        "resourceType": "CarePlan",
+        "id": "RacPlanoCuidados",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPlanoCuidados-1.0"
+          ]
+        },
+        "intent": "plan",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Plano de cuidados</b>: hidratação oral, repouso relativo, antitérmico se febre; retorno em 7 dias para reavaliação.</p></div>"
+        },
+        "status": "active",
+        "description": "Hidratação oral, repouso relativo, antitérmico se febre. Retorno em 7 dias para reavaliação.",
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:b2c3d4e5-6f7a-4b8c-9d0e-1f2a3b4c5d6e",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "RacMotivoContato",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRObservacaoDescritiva-1.0"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "48767-8"
+            }
+          ]
+        },
+        "subject": {
+          "type": "Patient",
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Motivo do contato</b>: dor de garganta e coriza há 3 dias.</p></div>"
+        },
+        "status": "final",
+        "issued": "2026-07-22T09:45:00-03:00",
+        "valueString": "Paciente refere dor de garganta e coriza há 3 dias, sem febre aferida em casa."
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:c3d4e5f6-7a8b-4c9d-a0e1-2f3a4b5c6d7e",
+      "resource": {
+        "resourceType": "Location",
+        "id": "RacLocalAtendimento",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLocalAtendimento-1.0"
+          ]
+        },
+        "status": "active",
+        "mode": "kind",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Local do atendimento</b>: Consultório 3 da UBS.</p></div>"
+        },
+        "name": "Consultório 3"
+      }
+    }
+  ]
+}
+</script>
+
+<script>
+const TERM = {
+  "BRTipoDocumento": { "RAC": "Registro de Atendimento Clínico", "RPM": "Registro de Prescrição de Medicamento" },
+  "BRModalidadeAssistencial": { "01": "Atenção Básica" },
+  "BRCaraterAtendimento": { "05": "Demanda espontânea" },
+  "BRResponsabilidadeParticipante": { "atendimento": "Responsável pelo atendimento clínico" },
+  "BRCBO": { "225103": "Médico infectologista" },
+  "diagnosis-role": { "AD": "Diagnóstico de admissão", "CM": "Comorbidade" },
+  "condition-clinical": { "active": "Ativo" },
+  "BRCID10": { "J069": "Infecção aguda das vias aéreas superiores, não especificada", "J459": "Asma não especificada" },
+  "BRTabelaSUS": { "0301010030": "Consulta de profissional de nível superior na atenção primária", "0301100039": "Aferição de pressão arterial" },
+  "BRProcedencia": { "09": "Demanda espontânea" },
+  "BRMotivoDesfecho": { "01": "Alta clínica" },
+  "BRFinanciamento": { "01": "Federal SUS" },
+  "BRViaAdministracao": { "10863": "Bucal", "10907": "Oral" },
+  "BRUnidadeMedida": { "48": "mL (mililitro)", "31": "Frasco", "27": "Envelope" },
+  "BRMedicamento": { "BR0292331-2": "Salbutamol, sulfato 0,4 mg/mL xarope", "BR0267203U0042": "Dipirona sódica 500 mg comprimido", "BR0267778-1": "Paracetamol 500 mg pó para solução 10 mL" },
+  "BRTipoObservacao": { "P": "Peso", "A": "Altura", "CA": "Circunferência abdominal" },
+  "allergyintolerance-clinical": { "active": "Ativa" },
+  "allergyintolerance-verification": { "confirmed": "Confirmada" },
+  "BRMedDRA": { "10046735": "Urticária", "10002424": "Angioedema" },
+  "BRAlergenosCBARA": { "amendoim": "Amendoim" },
+  "loinc.org": { "48767-8": "Annotation comment (fixado pelo perfil)" }
+};
+const decod = (system, code) => {
+  const cs = (system || "").split("/").pop();
+  return (TERM[cs] && TERM[cs][code]) || null;
+};
+
+const DIDATICA = [
+  "Este é o <b>sumário do documento</b> (perfil BRRegistroAtendimentoClinico) e é obrigatoriamente a <b>1ª entry</b> (invariante bdl-11). Na versão ampliada, as seções repetíveis aparecem em ação: 2 seções de diagnóstico, 2 de procedimento, 3 de observação e 2 de alergia &mdash; <b>seções com entry 1..1 repetem a seção</b>, não a entry. subject e author seguem com referência lógica: Patient e Organization <b>não entram</b> no Bundle.",
+  "O <b>contato assistencial</b> (Encounter) ampliado: 2 diagnósticos no slice problemAndDiagnosis &mdash; o principal com use <b>AD</b> (admissão) e a comorbidade com use <b>CM</b> &mdash; e 2 procedimentos no slice procedure (sem use), cada um com a extensão de <b>financiamento</b>. O slicing continua distinguindo os dois pela presença de use (discriminador exists).",
+  "O <b>diagnóstico do atendimento</b> (Condition, CID-10 J06.9 sem display &mdash; o perfil proíbe, forçando resolução via terminologia). subject por identifier: o paciente é o mesmo CPF em todos os recursos.",
+  "A <b>comorbidade</b> (Condition, CID-10 J45.9 &mdash; asma). Mesma modelagem do diagnóstico principal; a diferença está no Encounter.diagnosis.use (<b>CM</b>) e na 2ª seção problemasDiagnosticosAvaliados que a referencia. É por isso que a paciente recebe salbutamol.",
+  "O <b>procedimento principal</b> (Procedure, Tabela SUS 0301010030 &mdash; consulta na APS) com a extensão de <b>quantidade</b> (valuePositiveInt!) e performer com função CBO.",
+  "O <b>2º procedimento</b> (0301100039 &mdash; aferição de pressão arterial). Nota de modelagem honesta: o perfil BRMedidaObservada só admite <b>1 component</b> (..1), então PA sistólica+diastólica não cabe como Observation &mdash; aqui ela entra como <b>procedimento realizado</b>.",
+  "Um <b>documento dentro do documento</b>: a seção prescricao do RAC referencia esta Composition (o RPM). Na versão ampliada a seção única do RPM tem <b>2 entries</b> (entry 1..*): salbutamol e paracetamol na <b>mesma</b> prescrição &mdash; compare com as seções do RAC, que repetem a seção inteira.",
+  "A <b>1ª prescrição</b> (MedicationRequest &mdash; salbutamol) com posologia completa exigida pelo perfil: via de administração (bucal), dose em mL, validade e quantidade a dispensar. Aponta para o medicamento via medicationReference.",
+  "O <b>1º medicamento</b> (Medication &mdash; salbutamol). Curiosidade de modelagem: o perfil proíbe id e text (narrativa) &mdash; um recurso que só existe embutido em Bundle. O warning dom-6 do validador é inevitável aqui.",
+  "A <b>2ª prescrição</b> (MedicationRequest &mdash; paracetamol, via oral, se dor ou febre). Mesmo perfil, mesma posologia obrigatória; repare que requester/recorder repetem a mesma lotação (CNS-CNES) do prescritor.",
+  "O <b>2º medicamento</b> (Medication &mdash; paracetamol 500 mg pó para solução, forma <b>envelope</b>). Mesmo trade-off do salbutamol: sem id, sem narrativa, warning dom-6 esperado.",
+  "<b>Peso</b> (Observation, perfil BRMedidaObservada). A seção observacoes é <b>repetível com 1 entry cada</b> &mdash; por isso peso, altura e circunferência abdominal ganham seções separadas. O perfil <b>proíbe performer</b> (..0): o aviso de best practice do validador é inevitável, como o dom-6.",
+  "<b>Altura</b> &mdash; mesma modelagem do peso. Repare no valueQuantity com UCUM e no effectiveTiming.event (o perfil restringe effective[x] a Timing!).",
+  "<b>Circunferência abdominal</b> (código CA do BRTipoObservacao) &mdash; a 3ª medida do exemplo ampliado. Escolhida porque o CodeSystem a oferece pronta; pressão arterial não coube (ver nota do procedimento 6).",
+  "<b>Alergia a medicamento confirmada</b> (AllergyIntolerance, BRAlergiaReacaoAdversa): dipirona (código do próprio CodeSystem BRMedicamento!), criticidade alta, reação de urticária (MedDRA), onset. O discriminador entry.resolve() só casa seções de 1 entry &mdash; por isso 1 alergia por seção.",
+  "<b>Alergia alimentar</b> (amendoim &mdash; catálogo <b>CBARA</b> de alérgenos, categoria food, criticidade baixa, reação de angioedema). Compare com a dipirona: mesmo perfil, catálogos diferentes conforme a categoria do alérgeno.",
+  "O <b>plano de cuidados</b> (CarePlan, BRPlanoCuidados): intent fixado em plan, description obrigatória &mdash; o texto livre é o conteúdo principal. Última seção do RAC (planoCuidados, 0..1).",
+  "O <b>motivo do contato</b> (Observation descritiva). Não é seção: entra no Bundle porque <b>Encounter.reasonReference aponta de verdade</b> (reference 1..1). code FIXO (LOINC 48767-8), issued obrigatório, value restrito a string. O perfil proíbe performer E effective[x]: 2 warnings inevitáveis.",
+  "O <b>local do atendimento</b> (Location) &mdash; também referência REAL, via Encounter.location.location. status e mode fixados (active/kind), só o name é livre. Com ele, o fechamento transitivo fica visível: toda ponta de referência está dentro do malote."
+];
+
+const LAYOUT = [
+  [0, 0, null],
+  [1, 1, "seção &middot; <b>informacoesContatoAssistencial</b> (1..1)"],
+  [2, 1, "seção &middot; <b>problemasDiagnosticosAvaliados[0]</b> (1..)"],
+  [3, 1, "seção &middot; <b>problemasDiagnosticosAvaliados[1]</b> (seção repetida)"],
+  [4, 1, "seção &middot; <b>procedimentosRealizados[0]</b> (1..)"],
+  [5, 1, "seção &middot; <b>procedimentosRealizados[1]</b> (seção repetida)"],
+  [6, 1, "seção &middot; <b>prescricao</b> (1..1)"],
+  [7, 2, "seção única do RPM &middot; <b>entry[0]</b> (entry 1..)"],
+  [8, 2, "medicationReference"],
+  [9, 2, "seção única do RPM &middot; <b>entry[1]</b> &mdash; 2º medicamento na MESMA seção"],
+  [10, 2, "medicationReference"],
+  [11, 1, "seção &middot; <b>observacoes[0]</b> (1 entry por seção)"],
+  [12, 1, "seção &middot; <b>observacoes[1]</b> (seção repetida)"],
+  [13, 1, "seção &middot; <b>observacoes[2]</b> (seção repetida)"],
+  [14, 1, "seção &middot; <b>alergiaReacaoAdversa[0]</b>"],
+  [15, 1, "seção &middot; <b>alergiaReacaoAdversa[1]</b> (seção repetida)"],
+  [16, 1, "seção &middot; <b>planoCuidados</b> (0..1)"],
+  [17, 2, "Encounter.<b>reasonReference</b> &mdash; referência real, não é seção!"],
+  [18, 2, "Encounter.<b>location.location</b> &mdash; referência real, não é seção!"]
+];
+
+const bundle = JSON.parse(document.getElementById("bundle-json").textContent);
+const entries = bundle.entry;
+const porFullUrl = {};
+entries.forEach((e, i) => porFullUrl[e.fullUrl] = i);
+
+document.getElementById("lacre").innerHTML = `
+  <div><span class="k">Tipo</span><span class="v">${bundle.type}</span></div>
+  <div><span class="k">Identifier do documento</span><span class="v">${bundle.identifier.value}</span></div>
+  <div><span class="k">Timestamp</span><span class="v">${bundle.timestamp}</span></div>
+  <div><span class="k">Entries</span><span class="v">${entries.length}</span></div>
+  <div class="regras"><span class="k">Invariantes de documento</span>
+    <span title="bdl-9: documento deve ter identifier com system e value">bdl-9 ✓</span>
+    <span title="bdl-10: documento deve ter timestamp">bdl-10 ✓</span>
+    <span title="bdl-11: a primeira entry deve ser uma Composition">bdl-11 ✓</span></div>`;
+
+const malote = document.getElementById("malote");
+malote.innerHTML = "<h2>Índice do documento</h2>";
+LAYOUT.forEach(([idx, nivel, rotulo]) => {
+  const e = entries[idx], r = e.resource;
+  if (rotulo) {
+    const con = document.createElement("div");
+    con.className = "conector n" + nivel;
+    con.innerHTML = "&#8627; " + rotulo;
+    malote.appendChild(con);
+  }
+  const card = document.createElement("div");
+  card.className = `card c-${r.resourceType} nivel-${nivel}`;
+  card.id = "card-" + idx;
+  const perfil = (r.meta.profile[0] || "").split("/").pop();
+  card.innerHTML = `
+    <div class="tipo"><span class="num">${idx + 1}.</span><span class="nome">${r.resourceType}</span></div>
+    <div class="perfil">${perfil}</div>
+    <div class="resumo">${resumo(r)}</div>
+    <div class="fullurl">${e.fullUrl}</div>`;
+  card.onclick = () => selecionar(idx);
+  malote.appendChild(card);
+});
+const nota = document.createElement("div");
+nota.className = "nota-indice";
+nota.innerHTML = `<span class="rotulo">Ausências por design</span>
+  Patient e Organization não constam do Bundle: os perfis exigem referência <b>lógica</b> e proíbem reference. Na convenção real da RNDS, o system do identifier é a <b>URL do StructureDefinition</b> do alvo (BRIndividuo &rarr; CPF, BREstabelecimentoSaude &rarr; CNES, BRLotacaoProfissional &rarr; CNS-CNES). O fechamento transitivo é modulado pelo perfil.`;
+malote.appendChild(nota);
+
+function resumo(r) {
+  switch (r.resourceType) {
+    case "Composition": return `${r.title} &middot; status ${r.status} &middot; type ${r.type.coding[0].code}`;
+    case "Encounter": return `status ${r.status} &middot; ${decod(r.class.system, r.class.code)} &middot; ${r.period.start.slice(0,10)}`;
+    case "Condition": return `${r.code.coding[0].code} &mdash; ${decod(r.code.coding[0].system, r.code.coding[0].code)}`;
+    case "Procedure": return `${r.code.coding[0].code} &middot; ${decod(r.code.coding[0].system, r.code.coding[0].code)}`;
+    case "MedicationRequest": { const rt = r.dosageInstruction[0].route.coding[0]; return `status ${r.status} &middot; intent ${r.intent} &middot; via ${(decod(rt.system, rt.code) || rt.code).toLowerCase()}`; }
+    case "Medication": return `${r.code.coding[0].code} &mdash; ${decod(r.code.coding[0].system, r.code.coding[0].code)}`;
+    case "Observation": return r.valueQuantity ? `${decod(r.code.coding[0].system, r.code.coding[0].code)}: <b>${r.valueQuantity.value} ${r.valueQuantity.unit}</b>` : `motivo do contato &middot; "${r.valueString.slice(0, 48)}&hellip;"`;
+    case "CarePlan": return `plano de cuidados &middot; ${r.status}/${r.intent} &middot; ${r.description.slice(0, 44)}&hellip;`;
+    case "Location": return `${r.name} &middot; ${r.status} &middot; mode ${r.mode}`;
+    case "AllergyIntolerance": return `${decod(r.code.coding[0].system, r.code.coding[0].code) || r.code.coding[0].code} &middot; ${decod(r.verificationStatus.coding[0].system, r.verificationStatus.coding[0].code)} &middot; criticidade ${({low:'baixa',high:'alta'})[r.criticality] || r.criticality}`;
+    default: return "";
+  }
+}
+
+let atual = -1;
+function selecionar(idx, flash) {
+  atual = idx;
+  document.querySelectorAll(".card").forEach(c => c.classList.remove("ativo"));
+  const card = document.getElementById("card-" + idx);
+  if (card) {
+    card.classList.add("ativo");
+    card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (flash) { card.classList.remove("flash"); void card.offsetWidth; card.classList.add("flash"); }
+  }
+  renderDetalhe(idx);
+}
+function irPara(fullUrl) {
+  const idx = porFullUrl[fullUrl];
+  if (idx !== undefined) selecionar(idx, true);
+}
+
+function renderDetalhe(idx) {
+  const e = entries[idx], r = e.resource;
+  const det = document.getElementById("detalhe");
+  det.innerHTML = `
+    <h2><span class="num-det">${idx + 1}.</span>${r.resourceType}</h2>
+    <div class="perfil-link">meta.profile &middot; ${r.meta.profile[0]}</div>
+    <div class="nota"><span class="nota-rotulo">Nota didática</span>${DIDATICA[idx]}</div>
+    <div class="abas">
+      <button class="aba ativa" data-aba="visao">Leitura guiada</button>
+      <button class="aba" data-aba="relacoes">Relações</button>
+      <button class="aba" data-aba="narrativa">Narrativa</button>
+      <button class="aba" data-aba="json">JSON</button>
+    </div>
+    <div class="painel-aba ativa" id="aba-visao">${visaoDidatica(r)}</div>
+    <div class="painel-aba" id="aba-relacoes">${relacoes(idx)}</div>
+    <div class="painel-aba" id="aba-narrativa">${narrativa(r)}</div>
+    <div class="painel-aba" id="aba-json"><pre class="json">${jsonColorido(r)}</pre></div>`;
+  det.querySelectorAll(".aba").forEach(b => b.onclick = () => {
+    det.querySelectorAll(".aba").forEach(x => x.classList.remove("ativa"));
+    det.querySelectorAll(".painel-aba").forEach(x => x.classList.remove("ativa"));
+    b.classList.add("ativa");
+    det.querySelector("#aba-" + b.dataset.aba).classList.add("ativa");
+  });
+  det.querySelectorAll("[data-ref]").forEach(el => el.onclick = () => irPara(el.dataset.ref));
+  det.scrollTop = 0;
+}
+
+function campo(k, vHtml) { return `<div class="campo"><span class="k">${k}</span><span class="v">${vHtml}</span></div>`; }
+function vCode(coding) {
+  const c = coding[0], d = decod(c.system, c.code);
+  return `<span class="cod">${c.code}</span> ${d ? `<span class="decod">&mdash; ${d}</span>` : ""} <span class="decod sistema">${(c.system||"").split("/").pop()}</span>`;
+}
+function vRefUuid(ref) {
+  const idx = porFullUrl[ref];
+  const alvo = idx !== undefined ? entries[idx].resource.resourceType : "?";
+  return `<a class="ref" data-ref="${ref}">&rarr; entry ${idx + 1} &middot; ${alvo}</a>`;
+}
+const SIGLA_ID = {
+  "BRIndividuo-1.0": "CPF", "BREstabelecimentoSaude-1.0": "CNES",
+  "BRLotacaoProfissional-1.0": "LOTA\u00c7\u00c3O CNS-CNES", "cns": "CNS", "cnes": "CNES"
+};
+function siglaDe(system) {
+  const fim = (system || "").split("/").pop();
+  return SIGLA_ID[fim] || fim.toUpperCase();
+}
+function vRefLogica(ident, quem) {
+  const sys = siglaDe(ident.system);
+  return `<span class="ref-log" title="Referência lógica: aponta pelo identificador de negócio (${sys}). Convenção RNDS: o system é a URL do StructureDefinition do alvo. O recurso não está no Bundle.">${quem} &middot; ${sys} <b>${ident.value}</b></span>`;
+}
+
+function visaoDidatica(r) {
+  let h = "";
+  if (r.resourceType === "Composition") {
+    h += campo("status", `<b>${r.status}</b> &mdash; documento completo e verificado`);
+    h += campo("type", vCode(r.type.coding));
+    if (r.category) h += campo("category", vCode(r.category[0].coding));
+    h += campo("subject", vRefLogica(r.subject.identifier, "paciente"));
+    h += campo("date", r.date);
+    h += campo("author", vRefLogica(r.author[0].identifier, "estabelecimento"));
+    h += campo("title", `<b>${r.title}</b>`);
+    r.section.forEach((s, i) => {
+      s.entry.forEach((ent, j) => {
+        h += campo(`section[${i}].entry[${j}]`, ent.reference ? vRefUuid(ent.reference) : vRefLogica(ent.identifier, "documento externo"));
+      });
+    });
+  } else if (r.resourceType === "Encounter") {
+    h += campo("status", `<b>${r.status}</b>`);
+    h += campo("class", vCode([r.class]));
+    h += campo("priority", vCode(r.priority.coding));
+    h += campo("subject", vRefLogica(r.subject.identifier, "paciente"));
+    const p = r.participant[0];
+    h += campo("participant.function", vCode(p.extension[0].valueCodeableConcept.coding) + ` <span class="decod">(extensão BROcupacao)</span>`);
+    h += campo("participant.type", vCode(p.type[0].coding));
+    h += campo("participant.individual", vRefLogica(p.individual.identifier, "profissional"));
+    h += campo("period", `${r.period.start} &rarr; ${r.period.end}`);
+    r.diagnosis.forEach((d, i) => {
+      const rot = d.use ? `diagnosis[${i}] <span class="decod">slice problemAndDiagnosis (tem use)</span>` : `diagnosis[${i}] <span class="decod">slice procedure (sem use)</span>`;
+      let v = vRefUuid(d.condition.reference);
+      if (d.use) v += " &middot; use: " + vCode(d.use.coding);
+      if (d.condition.extension) v += " &middot; financiamento: " + vCode(d.condition.extension[0].valueCodeableConcept.coding);
+      h += campo(rot, v);
+    });
+    h += campo("hospitalization.admitSource", vCode(r.hospitalization.admitSource.coding));
+    h += campo("hospitalization.dischargeDisposition", vCode(r.hospitalization.dischargeDisposition.coding));
+    h += campo("serviceProvider", vRefLogica(r.serviceProvider.identifier, "estabelecimento"));
+  } else if (r.resourceType === "Condition") {
+    h += campo("clinicalStatus", vCode(r.clinicalStatus.coding));
+    h += campo("code", vCode(r.code.coding));
+    h += campo("subject", vRefLogica(r.subject.identifier, "paciente"));
+  } else if (r.resourceType === "Procedure") {
+    h += campo("extensão quantidade", `<b>${r.extension[0].valuePositiveInt}</b> <span class="decod">(valuePositiveInt &mdash; o perfil exige o tipo exato)</span>`);
+    h += campo("status", `<b>${r.status}</b>`);
+    h += campo("code", vCode(r.code.coding));
+    h += campo("subject", vRefLogica(r.subject.identifier, "paciente"));
+    h += campo("performedDateTime", r.performedDateTime);
+    h += campo("performer.function", vCode(r.performer[0].function.coding));
+    h += campo("performer.actor", vRefLogica(r.performer[0].actor.identifier, "profissional"));
+  } else if (r.resourceType === "MedicationRequest") {
+    h += campo("status / intent", `<b>${r.status}</b> / <b>${r.intent}</b>`);
+    h += campo("medicationReference", vRefUuid(r.medicationReference.reference));
+    h += campo("subject", vRefLogica(r.subject.identifier, "paciente"));
+    h += campo("authoredOn", r.authoredOn);
+    h += campo("requester / recorder", vRefLogica(r.requester.identifier, "profissional"));
+    const d = r.dosageInstruction[0];
+    h += campo("route", vCode(d.route.coding));
+    h += campo("dose", `<b>${d.doseAndRate[0].doseQuantity.value}</b> ` + vCode(d.doseAndRate[0].type.coding));
+    h += campo("timing", `${d.timing.repeat.count}&ndash;${d.timing.repeat.countMax} administrações`);
+    h += campo("dispenseRequest", `validade ${r.dispenseRequest.validityPeriod.start.slice(0,10)} &rarr; ${r.dispenseRequest.validityPeriod.end.slice(0,10)} &middot; dispensar <b>${r.dispenseRequest.quantity.value}</b>`);
+  } else if (r.resourceType === "Observation") {
+    h += campo("status", `<b>${r.status}</b>`);
+    h += campo("code", vCode(r.code.coding));
+    h += campo("subject", vRefLogica(r.subject.identifier, "paciente"));
+    if (r.effectiveTiming) h += campo("effectiveTiming", `${r.effectiveTiming.event[0]} <span class="decod">(o perfil restringe effective[x] a Timing)</span>`);
+    if (r.issued) h += campo("issued", `${r.issued} <span class="decod">(obrigatório no perfil descritivo)</span>`);
+    if (r.valueQuantity) h += campo("valueQuantity", `<b>${r.valueQuantity.value} ${r.valueQuantity.unit}</b> <span class="decod sistema">UCUM ${r.valueQuantity.code}</span>`);
+    if (r.valueString) h += campo("valueString", `&ldquo;${r.valueString}&rdquo; <span class="decod">(value[x] restrito a string)</span>`);
+    h += campo("performer", `<span class="decod">ausente &mdash; o perfil proíbe (..0); warning de best practice inevitável</span>`);
+  } else if (r.resourceType === "CarePlan") {
+    h += campo("status", `<b>${r.status}</b> <span class="decod">&mdash; BREstadoSolicitacao</span>`);
+    h += campo("intent", `<b>${r.intent}</b> <span class="decod">&mdash; fixado pelo perfil</span>`);
+    h += campo("description", `&ldquo;${r.description}&rdquo; <span class="decod">(1..1 &mdash; o conteúdo principal)</span>`);
+    h += campo("subject", vRefLogica(r.subject.identifier, "paciente"));
+  } else if (r.resourceType === "Location") {
+    h += campo("status", `<b>${r.status}</b> <span class="decod">&mdash; fixado (active)</span>`);
+    h += campo("name", `<b>${r.name}</b>`);
+    h += campo("mode", `<b>${r.mode}</b> <span class="decod">&mdash; fixado (kind: tipo de local, não instância física)</span>`);
+  } else if (r.resourceType === "AllergyIntolerance") {
+    h += campo("clinicalStatus", vCode(r.clinicalStatus.coding));
+    h += campo("verificationStatus", vCode(r.verificationStatus.coding));
+    if (r.type) h += campo("type", `<b>${r.type}</b>`);
+    h += campo("category", `<b>${r.category[0]}</b> <span class="decod">&mdash; ${{food:"alimento",medication:"medicamento",biologic:"biológica",environment:"ambiental"}[r.category[0]] || ""}</span>`);
+    h += campo("criticality", `<b>${r.criticality}</b> <span class="decod">&mdash; ${{low:"baixa",high:"alta","unable-to-assess":"indeterminada"}[r.criticality] || ""}</span>`);
+    h += campo("code", vCode(r.code.coding));
+    h += campo("patient", vRefLogica(r.patient.identifier, "paciente"));
+    if (r.onsetDateTime) h += campo("onsetDateTime", r.onsetDateTime);
+    if (r.reaction) h += campo("reaction.manifestation", vCode(r.reaction[0].manifestation[0].coding));
+  } else if (r.resourceType === "Medication") {
+    h += campo("code", vCode(r.code.coding));
+    h += campo("form", vCode(r.form.coding));
+    h += campo("id / text", `<span class="decod">ausentes &mdash; o perfil proíbe (..0): recurso que só vive dentro do Bundle</span>`);
+  }
+  return h;
+}
+
+function narrativa(r) {
+  if (!r.text) return `<div class="nota"><span class="nota-rotulo">Nota didática</span>Este recurso não tem narrativa &mdash; o perfil BRMedicamento proíbe <span style="font-family:var(--mono)">text</span> (..0). O validador emite o warning dom-6 e não há como atendê-lo: trade-off real de modelagem.</div>`;
+  return `<div class="narrativa-box"><span class="rotulo-nar">Conteúdo atestado &middot; text.status = ${r.text.status} &mdash; derivada dos dados estruturados</span>${r.text.div}</div>
+  <div class="nota"><span class="nota-rotulo">Nota didática</span>Esta é a parte que o humano lê &mdash; e o que o atestador atesta. O documento inteiro deve ser legível apenas pelas narrativas coladas (subject &rarr; Composition &rarr; seções).</div>`;
+}
+
+function jsonColorido(obj) {
+  const j = JSON.stringify(obj, null, 2)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return j
+    .replace(/"(urn:uuid:[0-9a-f-]+)"/g, (m, ref) => porFullUrl[ref] !== undefined ? `"<span class="jref" data-ref="${ref}">${ref}</span>"` : m)
+    .replace(/"([^"]+)":/g, '"<span class="jk">$1</span>":')
+    .replace(/: "([^"]*)"/g, ': "<span class="js">$1</span>"')
+    .replace(/: (\d+)/g, ': <span class="jn">$1</span>');
+}
+
+function coletarSaidas(obj, caminho) {
+  let out = [];
+  if (Array.isArray(obj)) obj.forEach((v, i) => out = out.concat(coletarSaidas(v, `${caminho}[${i}]`)));
+  else if (obj && typeof obj === "object") {
+    if (typeof obj.reference === "string" && obj.reference.startsWith("urn:uuid:"))
+      out.push({ caminho, ref: obj.reference });
+    for (const [k, v] of Object.entries(obj))
+      if (k !== "reference") out = out.concat(coletarSaidas(v, caminho ? `${caminho}.${k}` : k));
+  }
+  return out;
+}
+function coletarLogicas(obj, caminho) {
+  let out = [];
+  if (Array.isArray(obj)) obj.forEach((v, i) => out = out.concat(coletarLogicas(v, `${caminho}[${i}]`)));
+  else if (obj && typeof obj === "object") {
+    if (obj.identifier && obj.identifier.system && obj.identifier.value && !obj.reference)
+      out.push({ caminho, system: obj.identifier.system, value: obj.identifier.value });
+    for (const [k, v] of Object.entries(obj))
+      if (k !== "identifier") out = out.concat(coletarLogicas(v, caminho ? `${caminho}.${k}` : k));
+  }
+  return out;
+}
+function relacoes(idx) {
+  const e = entries[idx], r = e.resource;
+  let h = "";
+  const saidas = coletarSaidas(r, "");
+  h += `<div class="rel-grupo"><h4>Referências de saída (urn:uuid)</h4>`;
+  h += saidas.length ? saidas.map(s => `<div class="rel-linha"><span class="caminho">${s.caminho}</span><span>${vRefUuid(s.ref)}</span></div>`).join("")
+                     : `<div class="rel-vazio">nenhuma &mdash; este recurso é uma folha do grafo</div>`;
+  h += `</div>`;
+  h += `<div class="rel-grupo"><h4>Referenciado por</h4>`;
+  let entradas = [];
+  entries.forEach((o, oi) => {
+    if (oi === idx) return;
+    coletarSaidas(o.resource, "").forEach(s => {
+      if (s.ref === e.fullUrl) entradas.push({ oi, caminho: s.caminho });
+    });
+  });
+  h += entradas.length ? entradas.map(x => `<div class="rel-linha"><span class="caminho">${entries[x.oi].resource.resourceType}(${x.oi + 1}).${x.caminho}</span><span><a class="ref" data-ref="${entries[x.oi].fullUrl}">&larr; entry ${x.oi + 1} &middot; ${entries[x.oi].resource.resourceType}</a></span></div>`).join("")
+                       : `<div class="rel-vazio">ninguém &mdash; ${idx === 0 ? "a Composition é a raiz do documento: ela aponta, não é apontada" : "verifique se este recurso deveria estar no documento (5ª regra)"}</div>`;
+  h += `</div>`;
+  const logicas = coletarLogicas(r, "");
+  h += `<div class="rel-grupo"><h4>Vínculos lógicos &mdash; identifier (alvos fora do Bundle)</h4>`;
+  if (!logicas.length) h += `<div class="rel-vazio">nenhum</div>`;
+  logicas.forEach(l => {
+    const sys = siglaDe(l.system);
+    const irmaos = [];
+    entries.forEach((o, oi) => {
+      if (oi === idx) return;
+      if (coletarLogicas(o.resource, "").some(x => x.system === l.system && x.value === l.value)) irmaos.push(oi);
+    });
+    const quem = irmaos.length ? `compartilhado com ${irmaos.map(i => `<a class="ref" data-ref="${entries[i].fullUrl}">${entries[i].resource.resourceType} (${i + 1})</a>`).join(", ")}` : "só aqui";
+    h += `<div class="rel-linha"><span class="caminho">${l.caminho}</span><span>${sys} <b>${l.value}</b> &mdash; ${quem}</span></div>`;
+  });
+  h += `<div class="nota"><span class="nota-rotulo">Nota didática</span>Os vínculos lógicos são a cola invisível do documento: o mesmo CPF/CNES/lotação repetido em vários recursos identifica paciente, estabelecimento e profissional sem que existam como entries. O receptor (RNDS) resolve esses identificadores contra os cadastros nacionais (CADSUS/CNES).</div></div>`;
+  return h;
+}
+
+selecionar(0);
+</script>
+</body>
+</html>

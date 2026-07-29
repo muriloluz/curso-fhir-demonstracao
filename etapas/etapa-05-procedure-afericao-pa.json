@@ -1,0 +1,65 @@
+{
+  "resourceType": "Procedure",
+  "id": "RacProcedimentoAfericaoPA",
+  "meta": {
+    "profile": [
+      "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProcedimentoRealizado-1.0"
+    ]
+  },
+  "extension": [
+    {
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRQuantidade-1.0",
+      "valuePositiveInt": 1
+    }
+  ],
+  "performer": [
+    {
+      "extension": [
+        {
+          "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIdentificacaoEquipe-1.0",
+          "valueInteger": 1234567
+        }
+      ],
+      "function": {
+        "coding": [
+          {
+            "code": "225103",
+            "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO"
+          }
+        ]
+      },
+      "actor": {
+        "identifier": {
+          "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+          "value": "898001160660034-2337545"
+        }
+      },
+      "onBehalfOf": {
+        "identifier": {
+          "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+          "value": "2337545"
+        }
+      }
+    }
+  ],
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Procedimento concluído em 22/07/2026: 0301100039 — aferição de pressão arterial (Tabela SUS), quantidade 1. Paciente CPF 12345678909.</p></div>"
+  },
+  "status": "completed",
+  "code": {
+    "coding": [
+      {
+        "code": "0301100039",
+        "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTabelaSUS"
+      }
+    ]
+  },
+  "subject": {
+    "identifier": {
+      "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+      "value": "12345678909"
+    }
+  },
+  "performedDateTime": "2026-07-22T09:05:00-03:00"
+}

@@ -1,0 +1,82 @@
+{
+  "resourceType": "MedicationRequest",
+  "id": "RacPrescricaoMedicamento",
+  "meta": {
+    "profile": [
+      "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPrescricaoMedicamento"
+    ]
+  },
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Prescrição ativa: salbutamol sulfato 0,4 mg/ml xarope, via bucal, 10 ml por administração, 3 administrações, validade 22/07/2026–29/07/2026, dispensar 1 frasco. Paciente CPF 12345678909.</p></div>"
+  },
+  "status": "active",
+  "intent": "order",
+  "medicationReference": {
+    "reference": "urn:uuid:4a5b6c70-8d9e-4fa0-b1c2-7e8f90a1b2c4"
+  },
+  "subject": {
+    "identifier": {
+      "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+      "value": "12345678909"
+    }
+  },
+  "authoredOn": "2026-07-22T09:40:00-03:00",
+  "requester": {
+    "identifier": {
+      "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+      "value": "898001160660034-2337545"
+    }
+  },
+  "recorder": {
+    "identifier": {
+      "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+      "value": "898001160660034-2337545"
+    }
+  },
+  "dosageInstruction": [
+    {
+      "timing": {
+        "repeat": {
+          "count": 3,
+          "countMax": 3
+        }
+      },
+      "route": {
+        "coding": [
+          {
+            "code": "10863",
+            "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRViaAdministracao"
+          }
+        ]
+      },
+      "doseAndRate": [
+        {
+          "type": {
+            "coding": [
+              {
+                "code": "48",
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida"
+              }
+            ]
+          },
+          "doseQuantity": {
+            "value": 10
+          }
+        }
+      ],
+      "maxDosePerAdministration": {
+        "value": 10
+      }
+    }
+  ],
+  "dispenseRequest": {
+    "validityPeriod": {
+      "start": "2026-07-22T00:00:00-03:00",
+      "end": "2026-07-29T23:59:59-03:00"
+    },
+    "quantity": {
+      "value": 1
+    }
+  }
+}

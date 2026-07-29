@@ -1,0 +1,82 @@
+{
+  "resourceType": "MedicationRequest",
+  "id": "RacPrescricaoParacetamol",
+  "meta": {
+    "profile": [
+      "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPrescricaoMedicamento"
+    ]
+  },
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Prescrição ativa: paracetamol 500 mg pó para solução 10 ml, via oral, se dor ou febre, até 4 administrações/dia por 3 dias, validade 22/07/2026–25/07/2026, dispensar 12 envelopes. Paciente CPF 12345678909.</p></div>"
+  },
+  "status": "active",
+  "intent": "order",
+  "medicationReference": {
+    "reference": "urn:uuid:f2a3b4c5-6d7e-4f80-99ba-123456789012"
+  },
+  "subject": {
+    "identifier": {
+      "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+      "value": "12345678909"
+    }
+  },
+  "authoredOn": "2026-07-22T09:40:00-03:00",
+  "requester": {
+    "identifier": {
+      "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+      "value": "898001160660034-2337545"
+    }
+  },
+  "recorder": {
+    "identifier": {
+      "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+      "value": "898001160660034-2337545"
+    }
+  },
+  "dosageInstruction": [
+    {
+      "timing": {
+        "repeat": {
+          "count": 12,
+          "countMax": 12
+        }
+      },
+      "route": {
+        "coding": [
+          {
+            "code": "10907",
+            "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRViaAdministracao"
+          }
+        ]
+      },
+      "doseAndRate": [
+        {
+          "type": {
+            "coding": [
+              {
+                "code": "48",
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida"
+              }
+            ]
+          },
+          "doseQuantity": {
+            "value": 10
+          }
+        }
+      ],
+      "maxDosePerAdministration": {
+        "value": 10
+      }
+    }
+  ],
+  "dispenseRequest": {
+    "validityPeriod": {
+      "start": "2026-07-22T00:00:00-03:00",
+      "end": "2026-07-25T23:59:59-03:00"
+    },
+    "quantity": {
+      "value": 12
+    }
+  }
+}

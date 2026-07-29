@@ -19,8 +19,9 @@ Fluxo único da demonstração: **compilar o FSH → JSON** com o SUSHI e
 O script faz as três etapas (idempotente — pode rodar quantas vezes quiser):
 
 1. instala `br.ufg.cgis.rnds-lite#0.5.0` no cache do SUSHI (`~/.fhir/packages`), se necessário;
-2. `sushi .` → gera `fsh-generated/resources/Bundle-rac-bundle-completo.json`;
-3. valida o JSON: `java -jar recursos/validador/validator_cli.jar ... -version 4.0.1 -ig recursos/rnds-lite-0.5.0.tgz`.
+2. `sushi .` → gera os dois bundles em `fsh-generated/resources/`
+   (`Bundle-rac-bundle-completo.json` e `Bundle-rac-bundle-ampliado.json`);
+3. valida os dois JSONs com o validador oficial contra o IG rnds-lite.
 
 Ou rode os passos à mão:
 
@@ -34,8 +35,11 @@ java -jar recursos/validador/validator_cli.jar \
 ## Resultado esperado
 
 - SUSHI: `0 Errors`
-- Validador: `Success: 0 errors, 8 warnings` — os 8 avisos são esperados
+- Bundle completo: `Success: 0 errors, 8 warnings` — avisos esperados
   (bindings `preferred`/exemplo e afins do próprio IG; nenhum é problema do Bundle).
+- Bundle ampliado: `Success: 0 errors, 10 warnings` — os mesmos avisos,
+  +1 `dom-6` (2º Medication sem narrativa, proibida pelo perfil) e
+  +1 `performer` (3ª Observation, proibido pelo perfil).
 
 ## O que tem aqui
 
@@ -45,8 +49,10 @@ java -jar recursos/validador/validator_cli.jar \
 | [input/fsh/aliases.fsh](input/fsh/aliases.fsh) | apelidos dos CodeSystems/NamingSystems usados |
 | [input/fsh/rac-recursos.fsh](input/fsh/rac-recursos.fsh) | os 12 recursos do RAC como Instances `Usage: #inline` |
 | [input/fsh/rac-bundle.fsh](input/fsh/rac-bundle.fsh) | o Bundle document: fullUrls `urn:uuid` + `entry[N].resource` |
+| [input/fsh/rac-ampliado.fsh](input/fsh/rac-ampliado.fsh) | o exemplo **ainda mais completo**: 2 diagnósticos, 2 procedimentos, 2 medicamentos no mesmo RPM, 3 observações, 2 alergias — os padrões de repetição dos perfis |
 | recursos/rnds-lite-0.5.0.tgz | package do IG (usado pelo SUSHI e pelo validador) |
 | recursos/validador/validator_cli.jar | validador oficial HL7 |
+| [etapas/](etapas/README.md) | o RAC ampliado em JSON, um recurso por arquivo (etapas 01–19), com instruções e resultado esperado de validação por arquivo |
 
 ## Pontos para narrar na demonstração
 
@@ -57,3 +63,7 @@ java -jar recursos/validador/validator_cli.jar \
 - `Usage: #inline` + `entry[N].resource = NomeDaInstance`: recurso embutido no Bundle.
 - O validador é o portão final: terminologia (CID-10, SIGTAP, CBO...) e invariantes
   que o SUSHI não cobre.
+- No **rac-ampliado**: como os perfis repetem — seções `1..*`/`0..*` com `entry 1..1`
+  repetem a **seção** (diagnósticos, procedimentos, observações, alergias); a seção
+  do RPM (`entry 1..*`) recebe as duas prescrições; e as Instances são reaproveitadas
+  pelos dois bundles — mesmo tijolo, dois documentos.

@@ -1,0 +1,39 @@
+{
+  "resourceType": "Observation",
+  "id": "RacObservacaoAltura",
+  "meta": {
+    "profile": [
+      "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedidaObservada"
+    ]
+  },
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Altura</b>: 175 cm, aferida no atendimento.</p></div>"
+  },
+  "status": "final",
+  "code": {
+    "coding": [
+      {
+        "code": "A",
+        "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoObservacao"
+      }
+    ]
+  },
+  "subject": {
+    "identifier": {
+      "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+      "value": "12345678909"
+    }
+  },
+  "effectiveTiming": {
+    "event": [
+      "2026-07-22T09:45:00-03:00"
+    ]
+  },
+  "valueQuantity": {
+    "value": 175,
+    "unit": "cm",
+    "system": "http://unitsofmeasure.org",
+    "code": "cm"
+  }
+}

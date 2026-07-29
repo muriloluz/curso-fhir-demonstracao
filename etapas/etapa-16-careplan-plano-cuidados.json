@@ -1,0 +1,22 @@
+{
+  "resourceType": "CarePlan",
+  "id": "RacPlanoCuidados",
+  "meta": {
+    "profile": [
+      "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPlanoCuidados-1.0"
+    ]
+  },
+  "intent": "plan",
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Plano de cuidados</b>: hidratação oral, repouso relativo, antitérmico se febre; retorno em 7 dias para reavaliação.</p></div>"
+  },
+  "status": "active",
+  "description": "Hidratação oral, repouso relativo, antitérmico se febre. Retorno em 7 dias para reavaliação.",
+  "subject": {
+    "identifier": {
+      "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+      "value": "12345678909"
+    }
+  }
+}

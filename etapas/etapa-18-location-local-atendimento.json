@@ -1,0 +1,16 @@
+{
+  "resourceType": "Location",
+  "id": "RacLocalAtendimento",
+  "meta": {
+    "profile": [
+      "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLocalAtendimento-1.0"
+    ]
+  },
+  "status": "active",
+  "mode": "kind",
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Local do atendimento</b>: Consultório 3 da UBS.</p></div>"
+  },
+  "name": "Consultório 3"
+}

@@ -1,0 +1,50 @@
+{
+  "resourceType": "Composition",
+  "id": "RacPrescricaoComposicaoAmpliada",
+  "meta": {
+    "profile": [
+      "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegistroPrescricaoMedicamento"
+    ]
+  },
+  "type": {
+    "coding": [
+      {
+        "code": "RPM",
+        "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDocumento"
+      }
+    ]
+  },
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Registro de Prescrição de Medicamento</b> — paciente CPF 12345678909, prescrito em 22/07/2026 pela UBS CNES 2337545: (1) salbutamol sulfato 0,4 mg/ml xarope, via bucal; (2) paracetamol 500 mg pó para solução 10 ml, via oral.</p></div>"
+  },
+  "status": "final",
+  "subject": {
+    "identifier": {
+      "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+      "value": "12345678909"
+    }
+  },
+  "date": "2026-07-22T09:40:00-03:00",
+  "author": [
+    {
+      "identifier": {
+        "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+        "value": "2337545"
+      }
+    }
+  ],
+  "title": "Registro de Prescrição de Medicamento",
+  "section": [
+    {
+      "entry": [
+        {
+          "reference": "urn:uuid:3f4a5b60-7c8d-4e9f-a0b1-6d7e8f90a1b3"
+        },
+        {
+          "reference": "urn:uuid:e1f2a3b4-5c6d-4e7f-88a9-012345678901"
+        }
+      ]
+    }
+  ]
+}

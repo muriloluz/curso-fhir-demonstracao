@@ -1,0 +1,63 @@
+{
+  "resourceType": "AllergyIntolerance",
+  "id": "RacAlergiaAmendoim",
+  "meta": {
+    "profile": [
+      "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAlergiaReacaoAdversa-1.0"
+    ]
+  },
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Alergia alimentar</b>: amendoim (CBARA) — confirmada, baixa criticidade. Reação prévia: angioedema. Início: 10/06/2015.</p></div>"
+  },
+  "clinicalStatus": {
+    "coding": [
+      {
+        "code": "active",
+        "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical"
+      }
+    ]
+  },
+  "verificationStatus": {
+    "coding": [
+      {
+        "code": "confirmed",
+        "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification"
+      }
+    ]
+  },
+  "type": "allergy",
+  "category": [
+    "food"
+  ],
+  "criticality": "low",
+  "code": {
+    "coding": [
+      {
+        "code": "amendoim",
+        "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRAlergenosCBARA"
+      }
+    ]
+  },
+  "patient": {
+    "identifier": {
+      "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+      "value": "12345678909"
+    }
+  },
+  "onsetDateTime": "2015-06-10",
+  "reaction": [
+    {
+      "manifestation": [
+        {
+          "coding": [
+            {
+              "code": "10002424",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedDRA"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

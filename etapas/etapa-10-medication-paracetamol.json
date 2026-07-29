@@ -1,0 +1,24 @@
+{
+  "resourceType": "Medication",
+  "meta": {
+    "profile": [
+      "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedicamento"
+    ]
+  },
+  "code": {
+    "coding": [
+      {
+        "code": "BR0267778-1",
+        "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedicamento"
+      }
+    ]
+  },
+  "form": {
+    "coding": [
+      {
+        "code": "27",
+        "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida"
+      }
+    ]
+  }
+}

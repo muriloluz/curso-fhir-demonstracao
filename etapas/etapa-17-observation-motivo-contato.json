@@ -1,0 +1,31 @@
+{
+  "resourceType": "Observation",
+  "id": "RacMotivoContato",
+  "meta": {
+    "profile": [
+      "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRObservacaoDescritiva-1.0"
+    ]
+  },
+  "code": {
+    "coding": [
+      {
+        "system": "http://loinc.org",
+        "code": "48767-8"
+      }
+    ]
+  },
+  "subject": {
+    "type": "Patient",
+    "identifier": {
+      "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+      "value": "12345678909"
+    }
+  },
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Motivo do contato</b>: dor de garganta e coriza há 3 dias.</p></div>"
+  },
+  "status": "final",
+  "issued": "2026-07-22T09:45:00-03:00",
+  "valueString": "Paciente refere dor de garganta e coriza há 3 dias, sem febre aferida em casa."
+}

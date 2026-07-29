@@ -1,0 +1,1150 @@
+{
+  "resourceType": "Bundle",
+  "id": "rac-bundle-ampliado",
+  "identifier": {
+    "system": "http://www.saude.gov.br/fhir/r4/NamingSystem/BRRNDS-99999",
+    "value": "2337545-8f2b47ac-3d5e-4c91-b76a-de0f19283a4b"
+  },
+  "type": "document",
+  "timestamp": "2026-07-22T09:45:00-03:00",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:d4e5f6a7-8b9c-4d0e-b1f2-3a4b5c6d7e8f",
+      "resource": {
+        "resourceType": "Composition",
+        "id": "RacComposicaoAmpliada",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegistroAtendimentoClinico"
+          ]
+        },
+        "type": {
+          "coding": [
+            {
+              "code": "RAC",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDocumento"
+            }
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Registro de Atendimento Clínico</b> — atenção básica. Paciente CPF 12345678909, atendida em 22/07/2026 na UBS CNES 2337545. Diagnósticos: J06.9 (atendimento) e J45.9 (comorbidade). Procedimentos: 0301010030 (consulta APS) e 0301100039 (aferição de PA). Prescrição: salbutamol xarope (bucal) e paracetamol pó para solução (oral). Observações: peso 72,5 kg; altura 175 cm; circunferência abdominal 89 cm. Alergias: dipirona (medicamento, alta criticidade — urticária) e amendoim (alimento, baixa criticidade — angioedema). Plano de cuidados: hidratação, repouso e retorno em 7 dias.</p></div>"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "01",
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRModalidadeAssistencial"
+              }
+            ]
+          }
+        ],
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "date": "2026-07-22T09:45:00-03:00",
+        "author": [
+          {
+            "identifier": {
+              "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+              "value": "2337545"
+            }
+          }
+        ],
+        "title": "Registro de Atendimento Clínico",
+        "section": [
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:e5f6a7b8-9c0d-4e1f-82a3-4b5c6d7e8f90"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:5b6f3a10-2c1e-4a7b-9a44-1f2ab3c4d5e6"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:f6a7b8c9-0d1e-4f2a-93b4-5c6d7e8f9012"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:7c8d9e20-3f4a-4b5c-8d6e-2a3b4c5d6e7f"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:a7b8c9d0-1e2f-4a3b-84c5-6d7e8f901234"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:d0e1f2a3-4b5c-4d6e-97f8-901234567890"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:8b9c0da0-1e2f-4a3b-8c4d-e5f60718293a"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:9c0d1eb0-2f3a-4b4c-9d5e-f60718293a4b"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:b8c9d0e1-2f3a-4b4c-95d6-7e8f90123456"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:5f6a7b80-9c0d-4e1f-a2b3-c4d5e6f708a9"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:c9d0e1f2-3a4b-4c5d-86e7-8f9012345678"
+              }
+            ]
+          },
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:a1b2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:e5f6a7b8-9c0d-4e1f-82a3-4b5c6d7e8f90",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "RacContatoAssistencialAmpliado",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRContatoAssistencial-1.0"
+          ]
+        },
+        "participant": [
+          {
+            "extension": [
+              {
+                "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROcupacao-1.0",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "code": "225103",
+                      "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO"
+                    }
+                  ]
+                }
+              },
+              {
+                "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIdentificacaoEquipe-1.0",
+                "valueInteger": 1234567
+              }
+            ],
+            "type": [
+              {
+                "coding": [
+                  {
+                    "code": "atendimento",
+                    "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRResponsabilidadeParticipante"
+                  }
+                ]
+              }
+            ],
+            "individual": {
+              "identifier": {
+                "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+                "value": "898001160660034-2337545"
+              }
+            }
+          }
+        ],
+        "diagnosis": [
+          {
+            "condition": {
+              "extension": [
+                {
+                  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRFinanciamento-1.0",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "code": "01",
+                        "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRFinanciamento"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "reference": "urn:uuid:7c8d9e20-3f4a-4b5c-8d6e-2a3b4c5d6e7f"
+            }
+          },
+          {
+            "condition": {
+              "extension": [
+                {
+                  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRFinanciamento-1.0",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "code": "01",
+                        "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRFinanciamento"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "reference": "urn:uuid:a7b8c9d0-1e2f-4a3b-84c5-6d7e8f901234"
+            }
+          },
+          {
+            "condition": {
+              "reference": "urn:uuid:5b6f3a10-2c1e-4a7b-9a44-1f2ab3c4d5e6"
+            },
+            "use": {
+              "coding": [
+                {
+                  "code": "AD",
+                  "system": "http://terminology.hl7.org/CodeSystem/diagnosis-role"
+                }
+              ]
+            }
+          },
+          {
+            "condition": {
+              "reference": "urn:uuid:f6a7b8c9-0d1e-4f2a-93b4-5c6d7e8f9012"
+            },
+            "use": {
+              "coding": [
+                {
+                  "code": "CM",
+                  "system": "http://terminology.hl7.org/CodeSystem/diagnosis-role"
+                }
+              ]
+            }
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Contato assistencial finalizado, atenção básica, demanda espontânea, 22/07/2026 09:00–09:40. Paciente CPF 12345678909, profissional lotado (CNS 898001160660034, CNES 2337545), UBS CNES 2337545. Diagnósticos: J06.9 (atendimento) e J45.9 (comorbidade). Procedimentos: consulta na APS e aferição de pressão arterial. Motivo: dor de garganta e coriza há 3 dias. Local: Consultório 3. Desfecho: alta clínica.</p></div>"
+        },
+        "status": "finished",
+        "class": {
+          "code": "01",
+          "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRModalidadeAssistencial"
+        },
+        "priority": {
+          "coding": [
+            {
+              "code": "05",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCaraterAtendimento"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "period": {
+          "start": "2026-07-22T09:00:00-03:00",
+          "end": "2026-07-22T09:40:00-03:00"
+        },
+        "hospitalization": {
+          "admitSource": {
+            "coding": [
+              {
+                "code": "09",
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRProcedencia"
+              }
+            ]
+          },
+          "dischargeDisposition": {
+            "coding": [
+              {
+                "code": "01",
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMotivoDesfecho"
+              }
+            ]
+          }
+        },
+        "serviceProvider": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+            "value": "2337545"
+          }
+        },
+        "reasonReference": [
+          {
+            "reference": "urn:uuid:b2c3d4e5-6f7a-4b8c-9d0e-1f2a3b4c5d6e"
+          }
+        ],
+        "location": [
+          {
+            "location": {
+              "reference": "urn:uuid:c3d4e5f6-7a8b-4c9d-a0e1-2f3a4b5c6d7e"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5b6f3a10-2c1e-4a7b-9a44-1f2ab3c4d5e6",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "RacProblemaDiagnostico",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProblemaDiagnostico"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Diagnóstico ativo: J06.9 — Infecção aguda das vias aéreas superiores, não especificada (CID-10). Paciente CPF 12345678909.</p></div>"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "code": "active",
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "code": "J069",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCID10"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:f6a7b8c9-0d1e-4f2a-93b4-5c6d7e8f9012",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "RacDiagnosticoAsma",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProblemaDiagnostico"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Comorbidade ativa: J45.9 — Asma não especificada (CID-10). Paciente CPF 12345678909.</p></div>"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "code": "active",
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "code": "J459",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCID10"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:7c8d9e20-3f4a-4b5c-8d6e-2a3b4c5d6e7f",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "RacProcedimentoRealizado",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProcedimentoRealizado-1.0"
+          ]
+        },
+        "extension": [
+          {
+            "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRQuantidade-1.0",
+            "valuePositiveInt": 1
+          }
+        ],
+        "performer": [
+          {
+            "extension": [
+              {
+                "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIdentificacaoEquipe-1.0",
+                "valueInteger": 1234567
+              }
+            ],
+            "function": {
+              "coding": [
+                {
+                  "code": "225103",
+                  "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO"
+                }
+              ]
+            },
+            "actor": {
+              "identifier": {
+                "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+                "value": "898001160660034-2337545"
+              }
+            },
+            "onBehalfOf": {
+              "identifier": {
+                "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+                "value": "2337545"
+              }
+            }
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Procedimento concluído em 22/07/2026: 0301010030 — consulta de profissional de nível superior na atenção primária (Tabela SUS), quantidade 1. Paciente CPF 12345678909.</p></div>"
+        },
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "code": "0301010030",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTabelaSUS"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "performedDateTime": "2026-07-22T09:30:00-03:00"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:a7b8c9d0-1e2f-4a3b-84c5-6d7e8f901234",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "RacProcedimentoAfericaoPA",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProcedimentoRealizado-1.0"
+          ]
+        },
+        "extension": [
+          {
+            "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRQuantidade-1.0",
+            "valuePositiveInt": 1
+          }
+        ],
+        "performer": [
+          {
+            "extension": [
+              {
+                "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIdentificacaoEquipe-1.0",
+                "valueInteger": 1234567
+              }
+            ],
+            "function": {
+              "coding": [
+                {
+                  "code": "225103",
+                  "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO"
+                }
+              ]
+            },
+            "actor": {
+              "identifier": {
+                "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+                "value": "898001160660034-2337545"
+              }
+            },
+            "onBehalfOf": {
+              "identifier": {
+                "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+                "value": "2337545"
+              }
+            }
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Procedimento concluído em 22/07/2026: 0301100039 — aferição de pressão arterial (Tabela SUS), quantidade 1. Paciente CPF 12345678909.</p></div>"
+        },
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "code": "0301100039",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTabelaSUS"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "performedDateTime": "2026-07-22T09:05:00-03:00"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:d0e1f2a3-4b5c-4d6e-97f8-901234567890",
+      "resource": {
+        "resourceType": "Composition",
+        "id": "RacPrescricaoComposicaoAmpliada",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegistroPrescricaoMedicamento"
+          ]
+        },
+        "type": {
+          "coding": [
+            {
+              "code": "RPM",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDocumento"
+            }
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Registro de Prescrição de Medicamento</b> — paciente CPF 12345678909, prescrito em 22/07/2026 pela UBS CNES 2337545: (1) salbutamol sulfato 0,4 mg/ml xarope, via bucal; (2) paracetamol 500 mg pó para solução 10 ml, via oral.</p></div>"
+        },
+        "status": "final",
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "date": "2026-07-22T09:40:00-03:00",
+        "author": [
+          {
+            "identifier": {
+              "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+              "value": "2337545"
+            }
+          }
+        ],
+        "title": "Registro de Prescrição de Medicamento",
+        "section": [
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:3f4a5b60-7c8d-4e9f-a0b1-6d7e8f90a1b3"
+              },
+              {
+                "reference": "urn:uuid:e1f2a3b4-5c6d-4e7f-88a9-012345678901"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:3f4a5b60-7c8d-4e9f-a0b1-6d7e8f90a1b3",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "RacPrescricaoMedicamento",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPrescricaoMedicamento"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Prescrição ativa: salbutamol sulfato 0,4 mg/ml xarope, via bucal, 10 ml por administração, 3 administrações, validade 22/07/2026–29/07/2026, dispensar 1 frasco. Paciente CPF 12345678909.</p></div>"
+        },
+        "status": "active",
+        "intent": "order",
+        "medicationReference": {
+          "reference": "urn:uuid:4a5b6c70-8d9e-4fa0-b1c2-7e8f90a1b2c4"
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "authoredOn": "2026-07-22T09:40:00-03:00",
+        "requester": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+            "value": "898001160660034-2337545"
+          }
+        },
+        "recorder": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+            "value": "898001160660034-2337545"
+          }
+        },
+        "dosageInstruction": [
+          {
+            "timing": {
+              "repeat": {
+                "count": 3,
+                "countMax": 3
+              }
+            },
+            "route": {
+              "coding": [
+                {
+                  "code": "10863",
+                  "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRViaAdministracao"
+                }
+              ]
+            },
+            "doseAndRate": [
+              {
+                "type": {
+                  "coding": [
+                    {
+                      "code": "48",
+                      "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida"
+                    }
+                  ]
+                },
+                "doseQuantity": {
+                  "value": 10
+                }
+              }
+            ],
+            "maxDosePerAdministration": {
+              "value": 10
+            }
+          }
+        ],
+        "dispenseRequest": {
+          "validityPeriod": {
+            "start": "2026-07-22T00:00:00-03:00",
+            "end": "2026-07-29T23:59:59-03:00"
+          },
+          "quantity": {
+            "value": 1
+          }
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:4a5b6c70-8d9e-4fa0-b1c2-7e8f90a1b2c4",
+      "resource": {
+        "resourceType": "Medication",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedicamento"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "code": "BR0292331-2",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedicamento"
+            }
+          ]
+        },
+        "form": {
+          "coding": [
+            {
+              "code": "31",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:e1f2a3b4-5c6d-4e7f-88a9-012345678901",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "RacPrescricaoParacetamol",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPrescricaoMedicamento"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Prescrição ativa: paracetamol 500 mg pó para solução 10 ml, via oral, se dor ou febre, até 4 administrações/dia por 3 dias, validade 22/07/2026–25/07/2026, dispensar 12 envelopes. Paciente CPF 12345678909.</p></div>"
+        },
+        "status": "active",
+        "intent": "order",
+        "medicationReference": {
+          "reference": "urn:uuid:f2a3b4c5-6d7e-4f80-99ba-123456789012"
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "authoredOn": "2026-07-22T09:40:00-03:00",
+        "requester": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+            "value": "898001160660034-2337545"
+          }
+        },
+        "recorder": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+            "value": "898001160660034-2337545"
+          }
+        },
+        "dosageInstruction": [
+          {
+            "timing": {
+              "repeat": {
+                "count": 12,
+                "countMax": 12
+              }
+            },
+            "route": {
+              "coding": [
+                {
+                  "code": "10907",
+                  "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRViaAdministracao"
+                }
+              ]
+            },
+            "doseAndRate": [
+              {
+                "type": {
+                  "coding": [
+                    {
+                      "code": "48",
+                      "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida"
+                    }
+                  ]
+                },
+                "doseQuantity": {
+                  "value": 10
+                }
+              }
+            ],
+            "maxDosePerAdministration": {
+              "value": 10
+            }
+          }
+        ],
+        "dispenseRequest": {
+          "validityPeriod": {
+            "start": "2026-07-22T00:00:00-03:00",
+            "end": "2026-07-25T23:59:59-03:00"
+          },
+          "quantity": {
+            "value": 12
+          }
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:f2a3b4c5-6d7e-4f80-99ba-123456789012",
+      "resource": {
+        "resourceType": "Medication",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedicamento"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "code": "BR0267778-1",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedicamento"
+            }
+          ]
+        },
+        "form": {
+          "coding": [
+            {
+              "code": "27",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:8b9c0da0-1e2f-4a3b-8c4d-e5f60718293a",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "RacObservacaoPeso",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedidaObservada"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Peso</b>: 72,5 kg, aferido no atendimento.</p></div>"
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "code": "P",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoObservacao"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "effectiveTiming": {
+          "event": [
+            "2026-07-22T09:45:00-03:00"
+          ]
+        },
+        "valueQuantity": {
+          "value": 72.5,
+          "unit": "kg",
+          "system": "http://unitsofmeasure.org",
+          "code": "kg"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:9c0d1eb0-2f3a-4b4c-9d5e-f60718293a4b",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "RacObservacaoAltura",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedidaObservada"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Altura</b>: 175 cm, aferida no atendimento.</p></div>"
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "code": "A",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoObservacao"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "effectiveTiming": {
+          "event": [
+            "2026-07-22T09:45:00-03:00"
+          ]
+        },
+        "valueQuantity": {
+          "value": 175,
+          "unit": "cm",
+          "system": "http://unitsofmeasure.org",
+          "code": "cm"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:b8c9d0e1-2f3a-4b4c-95d6-7e8f90123456",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "RacObservacaoCircAbdominal",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedidaObservada"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Circunferência abdominal</b>: 89 cm, aferida no atendimento.</p></div>"
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "code": "CA",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoObservacao"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "effectiveTiming": {
+          "event": [
+            "2026-07-22T09:45:00-03:00"
+          ]
+        },
+        "valueQuantity": {
+          "value": 89,
+          "unit": "cm",
+          "system": "http://unitsofmeasure.org",
+          "code": "cm"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5f6a7b80-9c0d-4e1f-a2b3-c4d5e6f708a9",
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "RacAlergiaDipirona",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAlergiaReacaoAdversa-1.0"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Alergia a medicamento</b>: dipirona sódica 500 mg comprimido — confirmada, criticidade alta. Reação prévia: urticária. Início: 15/03/2020.</p></div>"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "code": "active",
+              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "code": "confirmed",
+              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification"
+            }
+          ]
+        },
+        "type": "allergy",
+        "category": [
+          "medication"
+        ],
+        "criticality": "high",
+        "code": {
+          "coding": [
+            {
+              "code": "BR0267203U0042",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedicamento"
+            }
+          ]
+        },
+        "patient": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "onsetDateTime": "2020-03-15",
+        "reaction": [
+          {
+            "manifestation": [
+              {
+                "coding": [
+                  {
+                    "code": "10046735",
+                    "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedDRA"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:c9d0e1f2-3a4b-4c5d-86e7-8f9012345678",
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "RacAlergiaAmendoim",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAlergiaReacaoAdversa-1.0"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Alergia alimentar</b>: amendoim (CBARA) — confirmada, baixa criticidade. Reação prévia: angioedema. Início: 10/06/2015.</p></div>"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "code": "active",
+              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "code": "confirmed",
+              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification"
+            }
+          ]
+        },
+        "type": "allergy",
+        "category": [
+          "food"
+        ],
+        "criticality": "low",
+        "code": {
+          "coding": [
+            {
+              "code": "amendoim",
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRAlergenosCBARA"
+            }
+          ]
+        },
+        "patient": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "onsetDateTime": "2015-06-10",
+        "reaction": [
+          {
+            "manifestation": [
+              {
+                "coding": [
+                  {
+                    "code": "10002424",
+                    "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedDRA"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:a1b2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+      "resource": {
+        "resourceType": "CarePlan",
+        "id": "RacPlanoCuidados",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPlanoCuidados-1.0"
+          ]
+        },
+        "intent": "plan",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Plano de cuidados</b>: hidratação oral, repouso relativo, antitérmico se febre; retorno em 7 dias para reavaliação.</p></div>"
+        },
+        "status": "active",
+        "description": "Hidratação oral, repouso relativo, antitérmico se febre. Retorno em 7 dias para reavaliação.",
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:b2c3d4e5-6f7a-4b8c-9d0e-1f2a3b4c5d6e",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "RacMotivoContato",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRObservacaoDescritiva-1.0"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "48767-8"
+            }
+          ]
+        },
+        "subject": {
+          "type": "Patient",
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "12345678909"
+          }
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Motivo do contato</b>: dor de garganta e coriza há 3 dias.</p></div>"
+        },
+        "status": "final",
+        "issued": "2026-07-22T09:45:00-03:00",
+        "valueString": "Paciente refere dor de garganta e coriza há 3 dias, sem febre aferida em casa."
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:c3d4e5f6-7a8b-4c9d-a0e1-2f3a4b5c6d7e",
+      "resource": {
+        "resourceType": "Location",
+        "id": "RacLocalAtendimento",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLocalAtendimento-1.0"
+          ]
+        },
+        "status": "active",
+        "mode": "kind",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Local do atendimento</b>: Consultório 3 da UBS.</p></div>"
+        },
+        "name": "Consultório 3"
+      }
+    }
+  ]
+}
